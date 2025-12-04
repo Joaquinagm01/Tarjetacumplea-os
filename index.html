@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Invitación de Cumpleaños - Faustina</title>
-    <meta name="description" content="¡Ven a celebrar el cumpleaños de Faustina! Juegos, torta y mucha diversión el 27/12 de 13:00 a 16:00 en Suipacha 41, Rosario." />
+  <meta name="description" content="¡Ven a celebrar el cumpleaños de Faustina! Juegos, torta y mucha diversión el 27/12 de 13:00 a 16:00 en Suipacha 41 bis, Rosario." />
     <meta property="og:title" content="Invitación de Cumpleaños - Faustina" />
     <meta property="og:description" content="¡Ven a celebrar el cumpleaños de Faustina! Juegos, torta y mucha diversión." />
     <meta property="og:image" content="https://via.placeholder.com/1200x630/ffb3ba/000000?text=Cumpleaños+Faustina" />
@@ -20,33 +20,37 @@
   </head>
   <body>
     <main class="page">
-      <header class="site-header">
+      <header class="site-header" role="banner">
         <div class="header-inner">
-          <div class="title-wrap">
-            <h1 class="brand">Faustina</h1>
+          <div class="brand-row">
+            <div class="brand-logo" aria-hidden="true">🎁</div>
+            <h1 class="brand">FAUSTINA</h1>
           </div>
+
           <nav class="header-nav" aria-label="Navegación principal">
-            <ul>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
+            <ul id="main-nav">
               <li><a href="#invitation" class="nav-link">Invitación</a></li>
               <li><a href="#countdown" class="nav-link">Cuenta Regresiva</a></li>
-              <li><a href="#map" class="nav-link">Cómo Llegar</a></li>
+              <li><a href="#map" class="nav-link">Mapa</a></li>
             </ul>
           </nav>
+
+          <!-- header actions removed per user request -->
         </div>
       </header>
 
       <section class="hero" role="banner">
-        <div class="hero-stickers">
-          <span class="sticker sticker-unicorn">🦄</span>
-          <span class="sticker sticker-rainbow">🌈</span>
-          <span class="sticker sticker-sparkles">✨</span>
-        </div>
         <div class="hero-content">
-          <h2 class="hero-title">¡Te invito a celebrar mi cumpleaños!</h2>
-          <div id="hero-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
-          <div class="hero-elements" role="group" aria-label="Elementos interactivos de cumpleaños">
-            <span class="balloon" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎈</span>
+          <div class="hero-head">
+            <canvas id="hero-effect-canvas" class="hero-effect-canvas" aria-hidden="true"></canvas>
+            <h3 class="hero-subtitle">Los 7 años de Faustina</h3>
+            <h2 class="hero-title">¡Te invito a celebrar mi cumpleaños!</h2>
+            <div class="hero-elements" role="group" aria-label="Elementos interactivos de cumpleaños">
+
+            </div>
           </div>
+          <div id="hero-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
         </div>
   <!-- bottom stickers removed per user request -->
       </section>
@@ -62,21 +66,17 @@
               </div>
               <div class="meta-item">
                 <div class="meta-icon">⏰</div>
-                <div class="meta-text"><div class="meta-label">Horario</div><div class="meta-value">13:00 — 16:00</div></div>
+                <div class="meta-text"><div class="meta-label">Horario</div><div class="meta-value">13:00hs — 16:00hs</div></div>
               </div>
               <div class="meta-item">
                 <div class="meta-icon">📍</div>
-                <div class="meta-text"><div class="meta-label">Lugar</div><div class="meta-value">Suipacha 41, Rosario</div></div>
+                <div class="meta-text"><div class="meta-label">Lugar</div><div class="meta-value">Suipacha 41 bis, Rosario</div></div>
               </div>
             </div>
 
-            <p class="invite-note">Traé muchas ganas de jugar y un regalito si querés. ¡Habrá juegos, música y torta!</p>
+            <p class="invite-note"><span class="stretch-line">Traé muchas ganas de jugar. ¡Habrá juegos, música y torta!</p>
 
-            <div class="invite-cta">
-              <!-- visual-only CTA (no funcional) -->
-              <button class="btn primary">Confirmá tu asistencia</button>
-              <button class="btn">Ver cómo llegar</button>
-            </div>
+            <!-- invite CTA removed per user request -->
           </div>
           <!-- Hidden aliases for legacy tests (keeps UI clean) -->
           <div style="display:none" aria-hidden="true">
@@ -92,15 +92,17 @@
               <div id="capy" style="width: 340px; height: 260px; display: flex; align-items: center; justify-content: center; background: transparent; border-radius: 16px; overflow: visible;">
               </div>
             </div>
-            <div id="date-capy" class="capy-large" aria-hidden="true" style="margin-top:18px"></div>
           </div>
+          <!-- details capy removed per user request -->
         </div>
         <!-- Galería ocultada por preferencia del usuario; las secciones continúan mostrando capibaras grandes vía loadCapyGifs() -->
           <div id="countdown" class="countdown">
-            <h3>Cuenta regresiva para el cumpleaños</h3>
-            <noscript>
-              <p style="text-align:center;margin-top:8px;color:#444">La cuenta regresiva requiere JavaScript. Fecha: <strong>27/12</strong> — 13:00 a 16:00 — Suipacha 41, Rosario.</p>
-            </noscript>
+            <h3 class="countdown-title">Cuenta regresiva para el cumpleaños</h3>
+            <p class="countdown-sub">27/12 • 13:00 — 16:00 • Suipacha 41 bis</p>
+              <noscript>
+                <p style="text-align:center;margin-top:8px;color:#444">La cuenta regresiva requiere JavaScript. Fecha: <strong>27/12</strong> — 13:00 a 16:00 — Suipacha 41 bis, Rosario.</p>
+              </noscript>
+              <!-- live region removed to reduce frequent DOM writes (performance) -->
             <div class="countdown-visual" role="group" aria-label="Cuenta regresiva visual">
               <svg viewBox="0 0 200 200" class="ring" data-unit="days" aria-hidden="false">
                 <defs>
@@ -157,10 +159,10 @@
 
       <section id="map" class="info-card">
         <h3>¿Dónde es la fiesta?</h3>
-        <p>Encuéntranos en Suipacha 41, Rosario</p>
+  <p>Encuéntranos en Suipacha 41 bis, Rosario</p>
         <div class="map-container">
           <!-- Interactive map (Leaflet + OpenStreetMap). Falls back to iframe if JS disabled -->
-          <div id="leaflet-map" style="width:100%;height:300px;border-radius:12px;overflow:hidden" aria-label="Mapa interactivo: Suipacha 41, Rosario"></div>
+          <div id="leaflet-map" style="width:100%;height:300px;border-radius:12px;overflow:hidden" aria-label="Mapa interactivo: Suipacha 41 bis, Rosario"></div>
           <noscript>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d823!2d-60.6617052!3d-32.9328978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab4dc337b21b:0x912ba41b61374e9c!2zMzLCsDU1JzU4LjQiUyA2MMKwMzknNDIuMSJX!5e0!3m2!1ses!2sar!4v1234567890123!5m2!1ses!2sar"
@@ -174,8 +176,7 @@
             </iframe>
           </noscript>
         </div>
-        <p class="note">Estacionamiento disponible en las calles cercanas</p>
-  <div id="location-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
+  <!-- location capy removed per user request -->
       </section>
 
   <footer class="foot"></footer>

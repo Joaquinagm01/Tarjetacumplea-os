@@ -37,12 +37,12 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.5rem;
   background: var(--header-gradient);
   background-size: 400% 400%;
   animation: gradientShift 8s ease infinite;
   border-radius: 15px;
-  margin: 0.5rem;
+  margin: 0.75rem;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   position: relative;
   overflow: visible;
@@ -91,28 +91,55 @@ body {
 }
 
 /* header inner layout and nav */
-.header-inner{display:flex;align-items:center;gap:12px;justify-content:space-between;z-index:1}
+.header-inner{display:flex;align-items:center;gap:24px;justify-content:flex-start;z-index:1}
 .logo-wrap img{width:72px;height:72px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12)}
 .title-wrap{flex:1;margin-left:8px}
-.header-nav ul{display:flex;gap:12px;list-style:none;padding:0;margin:0}
-.header-nav a{color:var(--text-dark);text-decoration:none;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.14)}
-.header-nav a:focus,.header-nav a:hover{background:rgba(255,255,255,0.24)}
+.header-nav{margin-left:auto}
+.header-nav ul{display:flex;gap:22px;list-style:none;padding:0;margin:0}
+.header-nav a{color:var(--text-light);text-decoration:none;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,0.12);font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.header-nav a:focus,.header-nav a:hover{background:rgba(255,255,255,0.28);outline:3px solid rgba(255,255,255,0.15);outline-offset:2px}
 
 @media(max-width:720px){
-  .site-header{padding:12px}
-  .header-inner{flex-direction:column;align-items:center;text-align:center;gap:8px}
+  .site-header{padding:14px}
+  .header-inner{flex-direction:column;align-items:center;text-align:center;gap:14px}
   .header-nav ul{flex-wrap:wrap;justify-content:center}
 }
 
 .brand {
   font-family: 'Fredoka One', cursive;
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   font-weight: 400;
   color: white;
   margin-bottom: 0.2rem;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
   animation: bounceIn 1s ease-out;
 }
+
+/* New header layout additions */
+.brand-row{display:flex;align-items:center;gap:16px}
+.brand-logo{font-size:1.6rem;background:rgba(255,255,255,0.12);padding:8px 10px;border-radius:10px}
+.nav-toggle{display:none;background:transparent;border:0;font-size:1.2rem;padding:6px}
+.header-actions .btn.small{padding:8px 10px;font-size:0.95rem;border-radius:10px}
+
+.header-actions{margin-left:18px;display:flex;align-items:center;gap:8px}
+
+/* Make header sticky on top */
+.site-header{position:sticky;top:12px}
+
+/* Responsive: show nav toggle on small screens */
+@media(max-width:720px){
+  .nav-toggle{display:block}
+  #main-nav{display:none;background:rgba(255,255,255,0.95);padding:8px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.12)}
+  #main-nav.show{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+}
+
+/* focus visible for header controls */
+.header-actions .btn:focus, .nav-toggle:focus, .header-nav a:focus{outline:3px solid rgba(14, 76, 153, 0.18);outline-offset:3px}
+
+/* Global animations toggle - when body has .no-anim reduce or stop animations */
+/* When animations are disabled, remove animations entirely so elements don't remain at initial keyframe (hidden). */
+body.no-anim * { animation: none !important; transition: none !important }
+body.no-anim canvas, body.no-anim video, body.no-anim img { opacity: 0.99 } /* visual hack to avoid reflows */
 
 .subtitle {
   font-size: 0.9rem;
@@ -170,6 +197,62 @@ body {
   position: relative;
   z-index: 1;
 }
+
+/* New hero head wrapper: decorations constrained to headline area */
+.hero-head { position: relative; display: inline-block; width: 100%; padding: 0 1rem; }
+.hero-stickers {
+  position: absolute;
+  top: -26px;
+  left: 6px;
+  display: flex;
+  gap: 8px;
+  pointer-events: none;
+}
+.hero-elements {
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+}
+.hero-stickers .sticker, .hero-elements .balloon { font-size: 1.8rem; }
+
+/* Ensure decorations don't overflow hero area on small screens */
+@media (max-width: 520px) {
+  .hero-stickers { top: -20px; left: 8px; }
+  .hero-elements { top: 2px; right: 6px; }
+}
+
+/* hero effect canvas: absolute overlay above content without changing layout */
+.hero-effect-canvas {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -10px; /* slight overlap above the title */
+  width: calc(100% + 40px);
+  height: 110px;
+  pointer-events: none;
+  z-index: 2; /* on top of the background but below interactive overlays */
+  opacity: 0.95;
+}
+/* make sure text sits above the canvas unless we want graffiti over text */
+.hero-head > * { position: relative; z-index: 3 }
+
+@media (max-width: 520px) {
+  .hero-effect-canvas { top: -6px; height: 80px; width: calc(100% + 24px) }
+}
+.hero-effect-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  mix-blend-mode: screen;
+}
+/* keep content above canvas */
+.hero-head > * { position: relative; z-index: 1 }
 
 .hero-title {
   font-family: 'Fredoka One', cursive;
@@ -300,6 +383,26 @@ body {
 .meta-label { font-size:0.8rem; color:#666 }
 .meta-value { font-size:1.1rem; font-weight:700; color:var(--text-dark) }
 .invite-note { margin-top:0.6rem; font-size:1rem; color:#444 }
+
+/* Stretch a short line to occupy the full width without changing semantics */
+.stretch-line {
+  display: inline-block;
+  text-align: justify;
+  width: 100%;
+}
+.stretch-line::after {
+  /* Invisible pseudo-element forces the inline-block to justify the text across the full width */
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 0;
+  vertical-align: baseline;
+}
+
+@media (max-width: 520px) {
+  .stretch-line { text-align: left; }
+  .stretch-line::after { display: none; }
+}
 .invite-cta { margin-top:1rem }
 .invite-cta .btn { margin-right:0.6rem }
 .invite-right { text-align:center }
@@ -626,6 +729,11 @@ body {
   margin-bottom: 1rem;
 }
 
+.countdown-title { font-size: 1.8rem; margin-bottom: 0.25rem; color: #8b0030 }
+.countdown-sub { font-size: 1rem; color: #555; margin-bottom: 0.9rem }
+
+/* .pulse removed to reduce repaints */
+
 .countdown-timer {
   display: flex;
   justify-content: center;
@@ -795,6 +903,19 @@ body {
 }
 
 /* Confetti canvas */
+
+#faustina-confetti-canvas{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* don't block clicks */
+  z-index: 80; /* above page content but below modals/controls that use higher z */
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  will-change: transform;
+}
 canvas {
   position: fixed;
   top: 0;
