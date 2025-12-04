@@ -198,8 +198,17 @@ body {
 }
 
 .hero-elements span {
-  font-size: 3rem;
-  animation: float 3s ease-in-out infinite;
+  font-size: 2.6rem;
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  animation: float 3.4s ease-in-out infinite, pulse 6s ease-in-out infinite;
 }
 
 .hero-elements .balloon { animation-delay: 0s; }
@@ -207,6 +216,19 @@ body {
 .hero-elements .gift { animation-delay: 1s; }
 .hero-elements .star { animation-delay: 1.5s; }
 .hero-elements .heart { animation-delay: 2s; }
+
+/* emoji hover/focus effects */
+.hero-elements span:hover, .hero-elements span:focus {
+  transform: translateY(-8px) scale(1.06);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.16);
+  outline: none;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
 
 @keyframes bounceIn {
   0% { transform: scale(0.3); opacity: 0; }
@@ -252,6 +274,40 @@ body {
   color: var(--accent);
   margin-bottom: 1rem;
   text-align: center;
+}
+
+/* Invitation specific styles */
+.invitation-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,249,240,0.9) 100%);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 1000px;
+  margin: 0 auto 2.5rem;
+}
+.invitation-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 1.25rem;
+  align-items: center;
+}
+.invite-left { padding: 0.5rem 1rem }
+.invite-title { font-family: 'Fredoka One', cursive; font-size: 2.25rem; color: #8b0030; margin-bottom: 0.75rem }
+.invite-meta { display:flex; flex-direction:column; gap:0.6rem; margin-bottom:0.9rem }
+.meta-item { display:flex; gap:0.75rem; align-items:center; background: rgba(245,245,255,0.6); padding:0.6rem 0.75rem; border-radius:12px }
+.meta-icon { font-size:1.45rem; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px; background: linear-gradient(135deg,#fff9f7,#fff); box-shadow:0 6px 18px rgba(0,0,0,0.04) }
+.meta-text { display:flex; flex-direction:column }
+.meta-label { font-size:0.8rem; color:#666 }
+.meta-value { font-size:1.1rem; font-weight:700; color:var(--text-dark) }
+.invite-note { margin-top:0.6rem; font-size:1rem; color:#444 }
+.invite-cta { margin-top:1rem }
+.invite-cta .btn { margin-right:0.6rem }
+.invite-right { text-align:center }
+.invitation-card .capy-wrap { display:flex; align-items:center; justify-content:center }
+
+@media(max-width:920px){
+  .invitation-grid { grid-template-columns: 1fr; }
+  .invite-right { order:-1 }
 }
 
 .info-card p, .info-card ul {
@@ -500,13 +556,13 @@ body {
 }
 
 /* Visual countdown rings */
-.countdown-visual { display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap }
-.ring { width:140px;height:140px; display:block }
+.countdown-visual { display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap; padding: 1rem 0 }
+.ring { width:200px;height:200px; display:block }
 .ring circle { fill: none; transform: rotate(-90deg); transform-origin: 50% 50% }
-.ring .ring-bg { stroke: rgba(0,0,0,0.06); stroke-width:10 }
-.ring .ring-fg { stroke-width:10; stroke-linecap:round; stroke-dasharray: 452; stroke-dashoffset: 452; transition: stroke-dashoffset 0.6s ease }
-.ring-label { font-family: 'Fredoka One', cursive; font-size: 20px; fill: var(--text-dark); font-weight:700 }
-.ring-sub { font-family: 'Comfortaa', sans-serif; font-size: 12px; fill: #666 }
+.ring .ring-bg { stroke: rgba(0,0,0,0.06); stroke-width:14 }
+.ring .ring-fg { stroke-width:14; stroke-linecap:round; stroke-dasharray: 452; stroke-dashoffset: 452; transition: stroke-dashoffset 0.5s ease }
+.ring-label { font-family: 'Fredoka One', cursive; font-size: 36px; fill: var(--text-dark); font-weight:800 }
+.ring-sub { font-family: 'Comfortaa', sans-serif; font-size: 14px; fill: #666 }
 
 /* Fallback stroke colors if gradients fail to load */
 .ring[data-unit="days"] .ring-fg { stroke: #ff9a9e }
@@ -549,7 +605,8 @@ body {
   #capy, .capy-large { z-index: 12 }
 }
 
-@media (max-width:720px){ .ring{width:110px;height:110px} }
+@media (max-width:920px){ .ring{width:140px;height:140px} .ring-label{font-size:26px} }
+@media (max-width:520px){ .ring{width:110px;height:110px} .ring-label{font-size:20px} }
 
 /* Accessibility: ensure noscript fallback has sufficient contrast */
 .map-container noscript {

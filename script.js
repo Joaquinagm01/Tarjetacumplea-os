@@ -472,7 +472,7 @@ function playTinySound(){
 
 // Countdown timer
 function updateCountdown() {
-  const birthday = new Date('2024-12-27T13:00:00'); // Faustina's birthday
+  const birthday = new Date('2025-12-27T13:00:00'); // Faustina's birthday
   const now = new Date();
   const diff = birthday - now;
 
@@ -497,7 +497,7 @@ updateCountdown();
 
 /* Visual countdown updater: updates SVG rings and numbers */
 function updateVisualCountdown(){
-  const birthday = new Date('2024-12-27T13:00:00')
+  const birthday = new Date('2025-12-27T13:00:00')
   const now = new Date()
   let diff = Math.max(0, birthday - now)
   const days = Math.floor(diff / (1000*60*60*24))
@@ -610,3 +610,60 @@ function initLeafletMap(){
 }
 
 window.addEventListener('load', initLeafletMap)
+
+/* Ambient confetti: gentle, continuous background particles around the page */
+function startAmbientConfetti(){
+  const canvasA = document.getElementById('faustina-confetti-canvas')
+  if(!canvasA) return
+  const ctx = canvasA.getContext('2d')
+  function resize(){ canvasA.width = innerWidth; canvasA.height = innerHeight }
+  resize(); window.addEventListener('resize', resize)
+
+  const colors = ['#ffb3ba','#bae1ff','#ffffba','#baffc9','#d5baff','#ffdfba']
+  const particles = []
+  const COUNT = Math.max(36, Math.floor((window.innerWidth*window.innerHeight)/120000))
+  for(let i=0;i<COUNT;i++){
+    particles.push({
+      x: Math.random()*canvasA.width,
+      y: Math.random()*canvasA.height,
+      vx: (Math.random()*0.6)-0.3,
+      vy: 0.3 + Math.random()*0.6,
+      size: 6 + Math.random()*10,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360,
+      vr: (Math.random()-0.5)*4
+    })
+  }
+
+  let rafId = null
+  function draw(){
+    ctx.clearRect(0,0,canvasA.width,canvasA.height)
+    ctx.globalCompositeOperation = 'source-over'
+    for(const p of particles){
+      p.x += p.vx
+      p.y += p.vy
+      p.vx += Math.sin((p.y+Date.now()/1000)/60)*0.02
+      p.rot += p.vr
+
+      ctx.save()
+      ctx.translate(p.x, p.y)
+      ctx.rotate(p.rot * Math.PI/180)
+      ctx.fillStyle = p.color
+      ctx.globalAlpha = 0.9
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6)
+      ctx.restore()
+
+      // recycle
+      if(p.y > canvasA.height + 40){ p.y = -20; p.x = Math.random()*canvasA.width }
+      if(p.x < -60) p.x = canvasA.width + 60
+      if(p.x > canvasA.width + 60) p.x = -60
+    }
+    rafId = requestAnimationFrame(draw)
+  }
+  // start with slight delay so it doesn't compete with initial loads
+  setTimeout(()=> draw(), 200)
+  // expose stop if needed
+  return ()=>{ if(rafId) cancelAnimationFrame(rafId) }
+}
+
+window.addEventListener('load', ()=>{ try{ startAmbientConfetti() }catch(e){/*ignore*/} })

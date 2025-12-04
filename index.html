@@ -42,36 +42,41 @@
           <span class="sticker sticker-sparkles">✨</span>
         </div>
         <div class="hero-content">
-          <h2 class="hero-title">¡Feliz Cumpleaños Faustina!</h2>
-          <p class="hero-subtitle">7 años de magia, risas y aventuras</p>
+          <h2 class="hero-title">¡Te invito a celebrar mi cumpleaños!</h2>
           <div id="hero-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
           <div class="hero-elements" role="group" aria-label="Elementos interactivos de cumpleaños">
             <span class="balloon" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎈</span>
-            <span class="cake" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎂</span>
-            <span class="gift" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎁</span>
-            <span class="star" role="button" tabindex="0" aria-label="Haz clic para soltar globos">⭐</span>
-            <span class="heart" role="button" tabindex="0" aria-label="Haz clic para soltar globos">❤️</span>
           </div>
         </div>
-        <div class="hero-stickers hero-stickers-bottom">
-          <span class="sticker sticker-candy">🍬</span>
-          <span class="sticker sticker-party">🎉</span>
-          <span class="sticker sticker-balloons">🎈</span>
-        </div>
+  <!-- bottom stickers removed per user request -->
       </section>
 
-      <section id="invitation" class="card">
-        <div class="left">
-          <h2 class="invite-title">Invitación</h2>
-          <p class="big">Te espero el <strong>27/12</strong></p>
-          <p class="big">De <strong>13:00</strong> a <strong>16:00</strong></p>
-          <p class="big">Lugar: <strong>Suipacha 41, Rosario</strong></p>
+      <section id="invitation" class="card invitation-card">
+        <div class="invitation-grid">
+          <div class="invite-left">
+            <h2 class="invite-title">Invitación</h2>
+            <div class="invite-meta">
+              <div class="meta-item">
+                <div class="meta-icon">📅</div>
+                <div class="meta-text"><div class="meta-label">Fecha</div><div class="meta-value">27/12</div></div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-icon">⏰</div>
+                <div class="meta-text"><div class="meta-label">Horario</div><div class="meta-value">13:00 — 16:00</div></div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-icon">📍</div>
+                <div class="meta-text"><div class="meta-label">Lugar</div><div class="meta-value">Suipacha 41, Rosario</div></div>
+              </div>
+            </div>
 
-          <p class="note">Traé muchas ganas de jugar y un regalito si querés. ¡Habrá juegos y torta!</p>
+            <p class="invite-note">Traé muchas ganas de jugar y un regalito si querés. ¡Habrá juegos, música y torta!</p>
 
-          <div id="date-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
-          <div class="actions">
-            <!-- botones de invitación removidos por solicitud del usuario -->
+            <div class="invite-cta">
+              <!-- visual-only CTA (no funcional) -->
+              <button class="btn primary">Confirmá tu asistencia</button>
+              <button class="btn">Ver cómo llegar</button>
+            </div>
           </div>
           <!-- Hidden aliases for legacy tests (keeps UI clean) -->
           <div style="display:none" aria-hidden="true">
@@ -82,16 +87,20 @@
           </div>
         </div>
 
-        <div class="right">
-          <div class="capy-wrap" aria-hidden="false">
-            <!-- GIF will be loaded here automatically -->
-            <div id="capy" style="width: 340px; height: 240px; display: flex; align-items: center; justify-content: center; background: transparent; border-radius: 10px;">
-              <!-- Placeholder loading text removed as requested -->
+          <div class="invite-right">
+            <div class="capy-wrap" aria-hidden="false">
+              <div id="capy" style="width: 340px; height: 260px; display: flex; align-items: center; justify-content: center; background: transparent; border-radius: 16px; overflow: visible;">
+              </div>
             </div>
+            <div id="date-capy" class="capy-large" aria-hidden="true" style="margin-top:18px"></div>
           </div>
-          <!-- Galería ocultada por preferencia del usuario; las secciones continúan mostrando capibaras grandes vía loadCapyGifs() -->
+        </div>
+        <!-- Galería ocultada por preferencia del usuario; las secciones continúan mostrando capibaras grandes vía loadCapyGifs() -->
           <div id="countdown" class="countdown">
             <h3>Cuenta regresiva para el cumpleaños</h3>
+            <noscript>
+              <p style="text-align:center;margin-top:8px;color:#444">La cuenta regresiva requiere JavaScript. Fecha: <strong>27/12</strong> — 13:00 a 16:00 — Suipacha 41, Rosario.</p>
+            </noscript>
             <div class="countdown-visual" role="group" aria-label="Cuenta regresiva visual">
               <svg viewBox="0 0 200 200" class="ring" data-unit="days" aria-hidden="false">
                 <defs>
@@ -136,10 +145,7 @@
           </div>
 
           <div id="fun" class="media-actions">
-            <button id="faustina-confettiBtn" class="btn primary" aria-label="Lanzar confeti">¡Sorpresa!</button>
-            <button id="balloonsBtn" class="btn" aria-label="Soltar globos">¡Globos!</button>
-            <button id="faustina-musicBtn" class="btn" aria-pressed="false" aria-label="Reproducir música">Reproducir música</button>
-            <!-- Test aliases for compatibility -->
+            <!-- interactive buttons removed per user request; aliases kept hidden for tests -->
             <div style="display:none" aria-hidden="true">
               <button id="confettiBtn" aria-label="confetti alias"></button>
               <button id="playBtn" aria-label="play alias"></button>
@@ -172,7 +178,7 @@
   <div id="location-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
       </section>
 
-      <footer class="foot">Invitación diseñada para Faustina — 7 años</footer>
+  <footer class="foot"></footer>
     </main>
 
   <!-- RSVP modal removed per user request -->
@@ -184,6 +190,69 @@
   <audio id="faustina-bg-audio" preload="metadata">
     </audio>
 
+    <script>
+      (function(){
+        // Inline countdown fallback: muestra la cuenta regresiva aunque el script externo falle.
+        // Asunción: la fecha del evento es 27/12/2025 a las 13:00 (misma zona horaria del visitante).
+        const eventDate = new Date('2025-12-27T13:00:00');
+        function pad(n){ return String(n).padStart(2,'0'); }
+
+        function updateCountdownInline(){
+          const now = new Date();
+          const diff = eventDate - now;
+          const daysEl = document.getElementById('days');
+          const hoursEl = document.getElementById('hours');
+          const minutesEl = document.getElementById('minutes');
+          const secondsEl = document.getElementById('seconds');
+          if(!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+          if(diff <= 0){
+            daysEl.textContent = '0';
+            hoursEl.textContent = '00';
+            minutesEl.textContent = '00';
+            secondsEl.textContent = '00';
+            return;
+          }
+
+          const totalSec = Math.floor(diff / 1000);
+          const days = Math.floor(totalSec / 86400);
+          const hours = Math.floor((totalSec % 86400) / 3600);
+          const minutes = Math.floor((totalSec % 3600) / 60);
+          const seconds = totalSec % 60;
+
+          daysEl.textContent = String(days);
+          hoursEl.textContent = pad(hours);
+          minutesEl.textContent = pad(minutes);
+          secondsEl.textContent = pad(seconds);
+
+          // Update SVG ring progress. Use simple maxima: days -> 365, others standard.
+          const max = { days: 365, hours: 24, minutes: 60, seconds: 60 };
+          ['days','hours','minutes','seconds'].forEach(unit => {
+            const svg = document.querySelector('.ring[data-unit="'+unit+'"]');
+            if(!svg) return;
+            const fg = svg.querySelector('.ring-fg');
+            if(!fg) return;
+            const r = Number(fg.getAttribute('r')) || (unit==='days'?72:(unit==='hours'?56:(unit==='minutes'?40:24)));
+            const circ = 2 * Math.PI * r;
+            // ensure stroke-dasharray is set so the offset has effect
+            fg.style.strokeDasharray = circ;
+            // choose value for progress
+            let value = 0;
+            if(unit === 'days') value = Math.min(days, max.days);
+            if(unit === 'hours') value = hours;
+            if(unit === 'minutes') value = minutes;
+            if(unit === 'seconds') value = seconds;
+            const pct = Math.max(0, Math.min(1, value / max[unit]));
+            const offset = circ * (1 - pct);
+            fg.style.strokeDashoffset = offset;
+          });
+        }
+
+        // Run immediately and keep updating each second
+        updateCountdownInline();
+        setInterval(updateCountdownInline, 1000);
+      })();
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
