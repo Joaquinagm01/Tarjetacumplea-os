@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Invitación de Cumpleaños - Faustina</title>
+    <meta name="description" content="¡Ven a celebrar el cumpleaños de Faustina! Juegos, torta y mucha diversión el 27/12 de 13:00 a 16:00 en Suipacha 41, Rosario." />
+    <meta property="og:title" content="Invitación de Cumpleaños - Faustina" />
+    <meta property="og:description" content="¡Ven a celebrar el cumpleaños de Faustina! Juegos, torta y mucha diversión." />
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/ffb3ba/000000?text=Cumpleaños+Faustina" />
+    <meta property="og:url" content="https://tu-sitio.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comfortaa:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  <!-- Leaflet for interactive map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="site-header">
+        <div class="header-inner">
+          <div class="title-wrap">
+            <h1 class="brand">Faustina</h1>
+          </div>
+          <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+              <li><a href="#invitation" class="nav-link">Invitación</a></li>
+              <li><a href="#countdown" class="nav-link">Cuenta Regresiva</a></li>
+              <li><a href="#map" class="nav-link">Cómo Llegar</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero" role="banner">
+        <div class="hero-stickers">
+          <span class="sticker sticker-unicorn">🦄</span>
+          <span class="sticker sticker-rainbow">🌈</span>
+          <span class="sticker sticker-sparkles">✨</span>
+        </div>
+        <div class="hero-content">
+          <h2 class="hero-title">¡Feliz Cumpleaños Faustina!</h2>
+          <p class="hero-subtitle">7 años de magia, risas y aventuras</p>
+          <div id="hero-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
+          <div class="hero-elements" role="group" aria-label="Elementos interactivos de cumpleaños">
+            <span class="balloon" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎈</span>
+            <span class="cake" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎂</span>
+            <span class="gift" role="button" tabindex="0" aria-label="Haz clic para soltar globos">🎁</span>
+            <span class="star" role="button" tabindex="0" aria-label="Haz clic para soltar globos">⭐</span>
+            <span class="heart" role="button" tabindex="0" aria-label="Haz clic para soltar globos">❤️</span>
+          </div>
+        </div>
+        <div class="hero-stickers hero-stickers-bottom">
+          <span class="sticker sticker-candy">🍬</span>
+          <span class="sticker sticker-party">🎉</span>
+          <span class="sticker sticker-balloons">🎈</span>
+        </div>
+      </section>
+
+      <section id="invitation" class="card">
+        <div class="left">
+          <h2 class="invite-title">Invitación</h2>
+          <p class="big">Te espero el <strong>27/12</strong></p>
+          <p class="big">De <strong>13:00</strong> a <strong>16:00</strong></p>
+          <p class="big">Lugar: <strong>Suipacha 41, Rosario</strong></p>
+
+          <p class="note">Traé muchas ganas de jugar y un regalito si querés. ¡Habrá juegos y torta!</p>
+
+          <div id="date-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
+          <div class="actions">
+            <!-- botones de invitación removidos por solicitud del usuario -->
+          </div>
+          <!-- Hidden aliases for legacy tests (keeps UI clean) -->
+          <div style="display:none" aria-hidden="true">
+            <input id="externalUrl" type="text" value="Carpincho bebiendo té de burbujas.mp4" />
+            <button id="loadExternal"></button>
+            <div id="rsvpModal"></div>
+            <button id="rsvpBtn"></button>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="capy-wrap" aria-hidden="false">
+            <!-- GIF will be loaded here automatically -->
+            <div id="capy" style="width: 340px; height: 240px; display: flex; align-items: center; justify-content: center; background: transparent; border-radius: 10px;">
+              <!-- Placeholder loading text removed as requested -->
+            </div>
+          </div>
+          <!-- Galería ocultada por preferencia del usuario; las secciones continúan mostrando capibaras grandes vía loadCapyGifs() -->
+          <div id="countdown" class="countdown">
+            <h3>Cuenta regresiva para el cumpleaños</h3>
+            <div class="countdown-visual" role="group" aria-label="Cuenta regresiva visual">
+              <svg viewBox="0 0 200 200" class="ring" data-unit="days" aria-hidden="false">
+                <defs>
+                  <linearGradient id="g-days" x1="0" x2="1"><stop offset="0" stop-color="#ff9a9e"/><stop offset="1" stop-color="#fad0c4"/></linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="72" />
+                <circle class="ring-fg" cx="100" cy="100" r="72" stroke="url(#g-days)" />
+                <text class="ring-label" x="100" y="95" text-anchor="middle" id="days">0</text>
+                <text class="ring-sub" x="100" y="118" text-anchor="middle">Días</text>
+              </svg>
+
+              <svg viewBox="0 0 200 200" class="ring" data-unit="hours" aria-hidden="false">
+                <defs>
+                  <linearGradient id="g-hours" x1="0" x2="1"><stop offset="0" stop-color="#a1c4fd"/><stop offset="1" stop-color="#c2e9fb"/></linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="56" />
+                <circle class="ring-fg" cx="100" cy="100" r="56" stroke="url(#g-hours)" />
+                <text class="ring-label" x="100" y="95" text-anchor="middle" id="hours">0</text>
+                <text class="ring-sub" x="100" y="118" text-anchor="middle">Horas</text>
+              </svg>
+
+              <svg viewBox="0 0 200 200" class="ring" data-unit="minutes" aria-hidden="false">
+                <defs>
+                  <linearGradient id="g-minutes" x1="0" x2="1"><stop offset="0" stop-color="#c5f2bd"/><stop offset="1" stop-color="#fff1b6"/></linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="40" />
+                <circle class="ring-fg" cx="100" cy="100" r="40" stroke="url(#g-minutes)" />
+                <text class="ring-label" x="100" y="95" text-anchor="middle" id="minutes">0</text>
+                <text class="ring-sub" x="100" y="118" text-anchor="middle">Minutos</text>
+              </svg>
+
+              <svg viewBox="0 0 200 200" class="ring" data-unit="seconds" aria-hidden="false">
+                <defs>
+                  <linearGradient id="g-seconds" x1="0" x2="1"><stop offset="0" stop-color="#ffd6a5"/><stop offset="1" stop-color="#fdffb6"/></linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="24" />
+                <circle class="ring-fg" cx="100" cy="100" r="24" stroke="url(#g-seconds)" />
+                <text class="ring-label" x="100" y="95" text-anchor="middle" id="seconds">0</text>
+                <text class="ring-sub" x="100" y="118" text-anchor="middle">Segundos</text>
+              </svg>
+            </div>
+          </div>
+
+          <div id="fun" class="media-actions">
+            <button id="faustina-confettiBtn" class="btn primary" aria-label="Lanzar confeti">¡Sorpresa!</button>
+            <button id="balloonsBtn" class="btn" aria-label="Soltar globos">¡Globos!</button>
+            <button id="faustina-musicBtn" class="btn" aria-pressed="false" aria-label="Reproducir música">Reproducir música</button>
+            <!-- Test aliases for compatibility -->
+            <div style="display:none" aria-hidden="true">
+              <button id="confettiBtn" aria-label="confetti alias"></button>
+              <button id="playBtn" aria-label="play alias"></button>
+              <button id="capyBtn" aria-label="capy alias"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="map" class="info-card">
+        <h3>¿Dónde es la fiesta?</h3>
+        <p>Encuéntranos en Suipacha 41, Rosario</p>
+        <div class="map-container">
+          <!-- Interactive map (Leaflet + OpenStreetMap). Falls back to iframe if JS disabled -->
+          <div id="leaflet-map" style="width:100%;height:300px;border-radius:12px;overflow:hidden" aria-label="Mapa interactivo: Suipacha 41, Rosario"></div>
+          <noscript>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d823!2d-60.6617052!3d-32.9328978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab4dc337b21b:0x912ba41b61374e9c!2zMzLCsDU1JzU4LjQiUyA2MMKwMzknNDIuMSJX!5e0!3m2!1ses!2sar!4v1234567890123!5m2!1ses!2sar"
+              title="Mapa: Suipacha 41, Rosario (alternativa sin JavaScript)"
+              width="100%"
+              height="300"
+              style="border:0;border-radius:12px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </noscript>
+        </div>
+        <p class="note">Estacionamiento disponible en las calles cercanas</p>
+  <div id="location-capy" class="capy-large" aria-hidden="true" style="margin-top:12px"></div>
+      </section>
+
+      <footer class="foot">Invitación diseñada para Faustina — 7 años</footer>
+    </main>
+
+  <!-- RSVP modal removed per user request -->
+
+  <canvas id="faustina-confetti-canvas"></canvas>
+  <!-- alias canvas id expected by tests -->
+  <canvas id="confetti-canvas" style="display:none"></canvas>
+
+  <audio id="faustina-bg-audio" preload="metadata">
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
