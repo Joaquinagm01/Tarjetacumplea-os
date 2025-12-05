@@ -1,3 +1,58 @@
+// Compatibility polyfills for broader browser support
+;(function(){
+  if(!window.requestAnimationFrame){
+    window.requestAnimationFrame = function(cb){ return setTimeout(function(){ cb(Date.now()) }, 16); };
+    window.cancelAnimationFrame = function(id){ clearTimeout(id); };
+  }
+
+  if(typeof Element !== 'undefined'){
+    if(!Element.prototype.matches){
+      Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector || function(selector){
+        var matches = (this.document || this.ownerDocument).querySelectorAll(selector);
+        var i = 0;
+        while(i < matches.length && matches[i] !== this) i++;
+        return Boolean(matches[i]);
+      };
+    }
+
+    if(!Element.prototype.closest){
+      Element.prototype.closest = function(selector){
+        var el = this;
+        while(el && el.nodeType === 1){ if(el.matches(selector)) return el; el = el.parentElement || el.parentNode; }
+        return null;
+      };
+    }
+  }
+
+  if(typeof NodeList !== 'undefined' && !NodeList.prototype.forEach){ NodeList.prototype.forEach = Array.prototype.forEach; }
+})();
+
+// Debug overlay helper: visible box listing GIF URLs and errors (helps diagnose hotlink/CSP/CORS issues)
+function ensureCapyDebug(){
+  try{
+    if(typeof document === 'undefined') return
+    if(document.getElementById('capy-debug')) return
+    const d = document.createElement('div')
+    d.id = 'capy-debug'
+    d.style.position = 'fixed'
+    d.style.left = '8px'
+    d.style.bottom = '8px'
+    d.style.zIndex = '99999'
+    d.style.background = 'rgba(0,0,0,0.7)'
+    d.style.color = '#fff'
+    d.style.padding = '8px 10px'
+    d.style.fontSize = '12px'
+    d.style.borderRadius = '8px'
+    d.style.maxWidth = '360px'
+    d.style.maxHeight = '40vh'
+    d.style.overflow = 'auto'
+    d.style.lineHeight = '1.2'
+    d.innerText = 'Capy GIF debug:'
+    document.body.appendChild(d)
+  }catch(e){}
+}
+function capyDebugAdd(msg){ try{ ensureCapyDebug(); const el = document.createElement('div'); el.textContent = msg; document.getElementById('capy-debug').appendChild(el) }catch(e){} }
+
 // Simple interactions for the Faustina invitation (clean)
 (() => {
   const confettiBtn = document.getElementById('confettiBtn')
@@ -283,7 +338,7 @@ function loadCapyGifs() {
         img.style.height = 'auto'
         img.style.borderRadius = '10px'
         img.onload = ()=>{ placeholder.innerHTML = ''; if(placeholder.classList.contains('capy-large')){ const w=document.createElement('div'); w.style.width='100%'; w.style.height='100%'; w.style.display='flex'; w.style.alignItems='center'; w.style.justifyContent='center'; w.appendChild(img); placeholder.appendChild(w) } else placeholder.appendChild(img) }
-        img.onerror = ()=>{ placeholder.innerHTML = '<span style="color: #666;">Capybara</span>' }
+  img.onerror = ()=>{ placeholder.innerHTML = '<span style="color: #666;">Capybara</span>'; try{ capyDebugAdd('Image failed to load: '+src) }catch(e){} }
       }
     })()
   }
@@ -427,6 +482,7 @@ if(loadExternal && externalUrl){
       }
       img.onerror = ()=>{
         externalPreview.textContent = 'No se pudo cargar la imagen.'
+        try{ capyDebugAdd('External preview failed: '+url) }catch(e){}
       }
     } else if(lower.endsWith('.mp4')){
       const v = document.createElement('video')
