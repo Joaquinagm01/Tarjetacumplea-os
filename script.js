@@ -289,6 +289,8 @@ function loadCapyGifs() {
     const preferVideo = async () => {
       try{
         const urlObj = new URL(src, window.location.href)
+  // if source is a local media file we avoid probing for .mp4/.webm variants
+  if(urlObj.pathname.indexOf('/media/') === 0) return null
         const base = urlObj.pathname.replace(/\.[^.]+$/, '')
         const origin = urlObj.origin
         const candidates = [ origin + base + '.mp4', origin + base + '.webm' ]
@@ -302,6 +304,8 @@ function loadCapyGifs() {
     const findPoster = async () => {
       try{
         const urlObj = new URL(src, window.location.href)
+  // skip poster probing for local media files
+  if(urlObj.pathname.indexOf('/media/') === 0) return null
         const base = urlObj.pathname.replace(/\.[^.]+$/, '')
         const origin = urlObj.origin
         const posters = [ origin + base + '-poster.webp', origin + base + '-poster.jpg' ]
