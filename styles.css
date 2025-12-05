@@ -1054,6 +1054,11 @@ canvas {
   }
 }
 
+/* Enlarge Giphy embeds for hero and date */
+.hero-capy-embed, .date-gif { max-width: 720px; margin: 0 auto; }
+.hero-capy-embed iframe, .date-gif iframe { width: 100% !important; height: 360px !important; min-height: 220px !important; border-radius: 12px; }
+@media (max-width:720px){ .hero-capy-embed iframe, .date-gif iframe { height: 260px !important; min-height: 160px !important } }
+
 @media (max-width: 480px) {
   .hero-title {
     font-size: 2rem;
