@@ -194,7 +194,8 @@ function loadCapyGifs() {
   // Specific gif override for the invitation date placeholder (user-requested GIF)
   const forcedDateGif = 'https://media.giphy.com/media/LWSk9E1XyaPncDqlRr/giphy.gif?cid=790b7611d22af94741bc54fc74190bcc68d0b72dd6ce74de&ep=v1_user_favorites&rid=giphy.gif&ct=s'
   // Additional forced GIF for the invitation main capy area
-  const forcedCapyGif = 'https://media.giphy.com/media/XnUqczw4HRtdVk5HWe/giphy.gif?cid=790b7611d22af94741bc54fc74190bcc68d0b72dd6ce74de&ep=v1_user_favorites&rid=giphy.gif&ct=s'
+  // prefer local copy to avoid hotlink/CSP issues on some hosts (added by agent)
+  const forcedCapyGif = '/media/XnUqczw4HRtdVk5HWe.gif'
 
   // Hybrid lazy-load: load first N immediately, observe the rest
   // Increase immediate to cover hero + invitation + date for smoother first paint
@@ -338,7 +339,40 @@ function loadCapyGifs() {
         img.style.height = 'auto'
         img.style.borderRadius = '10px'
         img.onload = ()=>{ placeholder.innerHTML = ''; if(placeholder.classList.contains('capy-large')){ const w=document.createElement('div'); w.style.width='100%'; w.style.height='100%'; w.style.display='flex'; w.style.alignItems='center'; w.style.justifyContent='center'; w.appendChild(img); placeholder.appendChild(w) } else placeholder.appendChild(img) }
-  img.onerror = ()=>{ placeholder.innerHTML = '<span style="color: #666;">Capybara</span>'; try{ capyDebugAdd('Image failed to load: '+src) }catch(e){} }
+  img.onerror = ()=>{
+        // default placeholder text
+        placeholder.innerHTML = '<span style="color: #666;">Capybara</span>';
+        try{ capyDebugAdd('Image failed to load: '+src) }catch(e){}
+        // If the failed source is a Giphy-hosted URL, attempt to insert a reliable Giphy iframe embed as a fallback.
+        try{
+          const u = new URL(src, window.location.href)
+          const host = u.hostname || ''
+          if(/giphy.com|giphycdn.com/.test(host) || src.indexOf('giphy.com') !== -1){
+            // extract media id from common Giphy URL shapes: /media/:id/ or /gifs/:slug-:id
+            let id = null
+            const m1 = src.match(/\/media\/([^\/]+)\//)
+            const m2 = src.match(/-([A-Za-z0-9]{6,})\.gif/) // fallback pattern
+            if(m1 && m1[1]) id = m1[1]
+            else if(m2 && m2[1]) id = m2[1]
+            // if we have an id, create an iframe embed which is more likely to render on platforms that alter direct image requests
+            if(id){
+              const iframe = document.createElement('iframe')
+              iframe.src = 'https://giphy.com/embed/' + id
+              iframe.width = '100%'
+              iframe.style.border = '0'
+              iframe.setAttribute('frameBorder','0')
+              iframe.setAttribute('allowFullScreen','')
+              iframe.style.borderRadius = '10px'
+              // keep a reasonable default height; if placeholder is capy-large try to fill it
+              iframe.style.height = placeholder.classList.contains('capy-large') ? '100%' : '360px'
+              // clear and insert iframe
+              placeholder.innerHTML = ''
+              placeholder.appendChild(iframe)
+              try{ capyDebugAdd('Inserted Giphy iframe fallback for id: '+id) }catch(e){}
+            }
+          }
+        }catch(e){ /* ignore fallback errors */ }
+      }
       }
     })()
   }
