@@ -167,6 +167,8 @@ function loadCapyGifs() {
   placeholders.forEach((placeholderId, index) => {
     const placeholder = document.getElementById(placeholderId)
     if(!placeholder) return
+  // do not overwrite fixed placeholders (e.g., hero-capy with manual content)
+  if(placeholder.getAttribute && placeholder.getAttribute('data-fixed') === 'true') return
     // User requested: remove GIFs for the last two placeholders (location and details)
     if(placeholderId === 'location-capy' || placeholderId === 'details-capy'){
       placeholder.innerHTML = '<div style="color:#666;font-size:14px">Información próximamente</div>'
@@ -564,6 +566,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 ;(function(){
   const canvasEl = document.getElementById('hero-effect-canvas')
   if(!canvasEl) return
+  // user requested: disable hero-effect painting
+  canvasEl.style.display = 'none'
   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   if(prefersReduced){ canvasEl.style.display = 'none'; return }
 

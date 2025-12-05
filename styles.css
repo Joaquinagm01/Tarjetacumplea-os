@@ -916,6 +916,9 @@ body.no-anim canvas, body.no-anim video, body.no-anim img { opacity: 0.99 } /* v
   opacity: 0.95;
   will-change: transform;
 }
+
+/* User requested: remove foreground 'pintura' - hide graffiti canvases */
+#faustina-confetti-canvas, .hero-effect-canvas { display: none !important; opacity: 0 !important; pointer-events: none !important }
 canvas {
   position: fixed;
   top: 0;
