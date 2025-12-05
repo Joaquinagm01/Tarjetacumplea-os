@@ -193,7 +193,7 @@ function loadCapyGifs() {
 
   // Specific gif override for the invitation date placeholder (user-requested GIF)
   const forcedDateGif = 'https://media.giphy.com/media/LWSk9E1XyaPncDqlRr/giphy.gif?cid=790b7611d22af94741bc54fc74190bcc68d0b72dd6ce74de&ep=v1_user_favorites&rid=giphy.gif&ct=s'
-  // Additional forced GIF for the invitation main capy area
+  // Additional forced GIF for the invitation main capy area 
   // prefer local copy to avoid hotlink/CSP issues on some hosts (added by agent)
   const forcedCapyGif = '/media/XnUqczw4HRtdVk5HWe.gif'
 
